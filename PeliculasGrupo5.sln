@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeliculasGrupo5", "PeliculasGrupo5.csproj", "{ABE7EDAA-16F3-498F-8283-3377BDE8D1B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABE7EDAA-16F3-498F-8283-3377BDE8D1B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABE7EDAA-16F3-498F-8283-3377BDE8D1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABE7EDAA-16F3-498F-8283-3377BDE8D1B5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{ABE7EDAA-16F3-498F-8283-3377BDE8D1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABE7EDAA-16F3-498F-8283-3377BDE8D1B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABE7EDAA-16F3-498F-8283-3377BDE8D1B5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {727046FE-39F0-4917-91D0-52D2CDBA9489}
+	EndGlobalSection
+EndGlobal
