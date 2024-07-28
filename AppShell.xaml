@@ -9,7 +9,7 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:PeliculasPage}"
+        ContentTemplate="{DataTemplate local:PeliculasListPage}"
         Route="MainPage" />
 
 </Shell>

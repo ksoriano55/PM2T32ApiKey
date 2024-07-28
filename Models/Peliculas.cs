@@ -13,6 +13,16 @@ namespace PeliculasGrupo5.Models
         public string titulo { get; set; } = string.Empty;
         public string sinopsis { get; set; } = string.Empty;
         public DateTime fechaLanzamiento { get; set; }
-        public bool activo { get; set; }
+        public int activo { get; set; }
     }
+    public class PeliculasResponse
+    {
+        public List<Peliculas> data { get; set; }
+    }
+
+    public class ApiResponse
+    {
+        public string message { get; set; }
+    }
+
 }

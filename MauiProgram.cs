@@ -19,11 +19,17 @@ namespace PeliculasGrupo5
                 });
             builder.Services.AddSingleton<IPeliculas, PeliculasController>();
             builder.Services.AddTransient<PeliculasPage>();
+            builder.Services.AddTransient<PeliculasListPage>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
 
-            return builder.Build();
+            var app = builder.Build();
+
+            Services.ServiceProvider.Initialize(app.Services);
+
+            return app;
+
         }
     }
 }
