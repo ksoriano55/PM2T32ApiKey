@@ -18,8 +18,10 @@ namespace PeliculasGrupo5
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
             builder.Services.AddSingleton<IPeliculas, PeliculasController>();
+            builder.Services.AddSingleton<IUsuarios, UsuariosController>();
             builder.Services.AddTransient<PeliculasPage>();
             builder.Services.AddTransient<PeliculasListPage>();
+            builder.Services.AddTransient<InicioPage>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

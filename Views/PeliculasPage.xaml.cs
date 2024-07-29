@@ -9,7 +9,7 @@ public partial class PeliculasPage : ContentPage
     bool _delete = false;
     Peliculas? _peliculaSelect;
     public PeliculasPage(IPeliculas peliculas, Peliculas? peliculaSelect = null, bool delete = false)
-	{
+    {
         _peliculasService = peliculas;
         _delete = delete;
         _peliculaSelect = peliculaSelect;
@@ -35,43 +35,56 @@ public partial class PeliculasPage : ContentPage
     {
         txtTitulo.Text = _peliculaSelect.titulo;
         txtGenero.Text = _peliculaSelect.generoId;
-        txtFecha.Date = _peliculaSelect.fechaLanzamiento;
+        txtFecha.Date = Convert.ToDateTime(_peliculaSelect.fechaLanzamiento);
         txtSinopsis.Text = _peliculaSelect.sinopsis;
     }
 
     private async void btnGuardar_Clicked(object sender, EventArgs e)
     {
-        if(_peliculaSelect != null)
+        Peliculas peliculas = new Peliculas();
+        peliculas.titulo = txtTitulo.Text;
+        peliculas.generoId = txtGenero.Text;
+        peliculas.fechaLanzamiento = txtFecha.Date.ToString("yyyy-MM-dd");
+        peliculas.sinopsis = txtSinopsis.Text;
+        peliculas.activo = 1;
+
+        if (_peliculaSelect != null)
         {
             if (_delete)
             {
                 bool isYes = await DisplayAlert("¿Seguro desea eliminar esta pelicula?", "No se podra revertir", "Si", "No");
                 if (isYes)
                 {
-                    //if (await App.DataBase.DeleteSitio(currentSitio) > 0)
-                    //{
-                    //    await DisplayAlert("Aviso", "Registros Eliminado con Éxito...!", "OK");
-                    //    PageSitiosList page = new PageSitiosList();
-                    //    Navigation.PushAsync(page);
-                    //    Limpiar();
-                    //}
+                    var result = await _peliculasService.DeletePeliculas(_peliculaSelect.peliculaId);
+                    if (result != null)
+                    {
+                        await DisplayAlert("Exito", "¡Pelicula Eliminada exitosamente!", "OK");
+                    }
                 }
-                return;
             }
             else
             {
-
+                peliculas.peliculaId = _peliculaSelect.peliculaId;
+                var result = await _peliculasService.UpdatePeliculas(peliculas);
+                if (result != null)
+                {
+                    await DisplayAlert("Exito", "¡Pelicula Actualizada exitosamente!", "OK");
+                }
             }
         }
         else
         {
-            Peliculas peliculas = new Peliculas();
-            peliculas.titulo = txtTitulo.Text;
-            peliculas.generoId = txtGenero.Text;
-            peliculas.fechaLanzamiento = txtFecha.Date;
-            peliculas.sinopsis = txtSinopsis.Text;
-            peliculas.activo = 1;
             peliculas.peliculaId = 0;
+
+            var result = await _peliculasService.InsertPeliculas(peliculas);
+            if (result != null)
+            {
+                await DisplayAlert("Exito", "¡Pelicula guardada exitosamente!", "OK");
+            }
         }
+
+        var peliculaService = Services.ServiceProvider.GetService<IPeliculas>();
+        PeliculasListPage page = new PeliculasListPage(peliculaService);
+        await Navigation.PushAsync(page);
     }
 }

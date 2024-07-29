@@ -12,7 +12,7 @@ namespace PeliculasGrupo5.Models
         public string generoId { get; set; } = string.Empty;
         public string titulo { get; set; } = string.Empty;
         public string sinopsis { get; set; } = string.Empty;
-        public DateTime fechaLanzamiento { get; set; }
+        public string fechaLanzamiento { get; set; } = string.Empty;
         public int activo { get; set; }
     }
     public class PeliculasResponse
@@ -20,9 +20,13 @@ namespace PeliculasGrupo5.Models
         public List<Peliculas> data { get; set; }
     }
 
+    public class PeliculasResp
+    {
+        public Peliculas data { get; set; }
+    }
+
     public class ApiResponse
     {
         public string message { get; set; }
     }
-
 }

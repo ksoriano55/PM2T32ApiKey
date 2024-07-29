@@ -32,32 +32,10 @@ namespace PeliculasGrupo5.Controllers
             try
             {
                 var result = new List<Peliculas>();
-                //HttpResponseMessage response = await _client.GetAsync(Endpoints.Endpoints.GetPeliculas);
-                //if (response.IsSuccessStatusCode)
-                //{
-                //string content = await response.Content.ReadAsStringAsync();
-                string content = "{\r\n  \"data\": [\r\n    {\r\n      \"peliculaId\": 1,\r\n      \"generoId\": \"Terror\",\r\n      \"titulo\": \"Superbad\",\r\n      \"sinopsis\": \"Dos amigos de la infancia intentan aprovechar su última noche juntos antes de ir a la universidad, enfrentando situaciones cómicas y embarazosas.\",\r\n      \"fechaLanzamiento\": \"2024-07-28T06:00:00.000Z\",\r\n      \"activo\": 1\r\n    }\r\n  ]\r\n}\r\n\r\n";
-                var res = JsonSerializer.Deserialize<PeliculasResponse>(content, _serializerOptions);
-                if (res != null)
-                {
-                    result = res.data;
-                }
-                //}
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return new List<Peliculas>();
-            }
-        }
-
-        public async Task<List<Peliculas>> InsertPeliculas(Peliculas data)
-        {
-            try
-            {
-                var result = new List<Peliculas>();
-                HttpResponseMessage response = await _client.PostAsJsonAsync(Endpoints.Endpoints.insertPeliculas, data);
-                response.Headers.Add("x-api-key", "0s3wd18kexawb2thx42cf95q5jf4su");
+                string apiKey = Preferences.Get("apikey", "0s3wd18kexawb2thx42cf95q5jf4su");
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Endpoints.Endpoints.GetPeliculas);
+                request.Headers.Add("x-api-key", apiKey);
+                HttpResponseMessage response = await _client.SendAsync(request);
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -75,13 +53,53 @@ namespace PeliculasGrupo5.Controllers
             }
         }
 
+        public async Task<Peliculas> InsertPeliculas(Peliculas data)
+        {
+            try
+            {
+                var result = new Peliculas();
+                string apiKey = Preferences.Get("apikey", "0s3wd18kexawb2thx42cf95q5jf4su");
+
+                var jsonContent = JsonSerializer.Serialize(data, _serializerOptions);
+                var body = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, Endpoints.Endpoints.GetPeliculas);
+                request.Headers.Add("x-api-key", apiKey);
+                request.Content = body;
+
+                HttpResponseMessage response = await _client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    var res = JsonSerializer.Deserialize<PeliculasResp>(content, _serializerOptions);
+                    if (res != null)
+                    {
+                        result = res.data;
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new Peliculas();
+            }
+        }
+
         public async Task<ApiResponse> UpdatePeliculas(Peliculas data)
         {
             try
             {
                 var result = new ApiResponse();
-                HttpResponseMessage response = await _client.PostAsJsonAsync(Endpoints.Endpoints.updatePeliculas + data.peliculaId, data);
-                response.Headers.Add("x-api-key", "0s3wd18kexawb2thx42cf95q5jf4su");
+                string apiKey = Preferences.Get("apikey", "0s3wd18kexawb2thx42cf95q5jf4su");
+
+                var jsonContent = JsonSerializer.Serialize(data, _serializerOptions);
+                var body = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, Endpoints.Endpoints.GetPeliculas + "/" + data.peliculaId);
+                request.Headers.Add("x-api-key", apiKey);
+                request.Content = body;
+                HttpResponseMessage response = await _client.SendAsync(request);
+
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -104,8 +122,11 @@ namespace PeliculasGrupo5.Controllers
             try
             {
                 var result = new ApiResponse();
-                HttpResponseMessage response = await _client.DeleteAsync(Endpoints.Endpoints.deletePeliculas + peliculaId);
-                response.Headers.Add("x-api-key", "0s3wd18kexawb2thx42cf95q5jf4su");
+                string apiKey = Preferences.Get("apikey", "0s3wd18kexawb2thx42cf95q5jf4su");
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, Endpoints.Endpoints.GetPeliculas + "/" + peliculaId);
+                request.Headers.Add("x-api-key", apiKey);
+                HttpResponseMessage response = await _client.SendAsync(request);
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();

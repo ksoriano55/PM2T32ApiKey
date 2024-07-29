@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PeliculasGrupo5.Views.InicioPage"
+             Title="InicioPage">
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="300">
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <!-- Definición de las filas del Grid -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Frame Grid.Row="0" BackgroundColor="LightGray" CornerRadius="0" HasShadow="False" Padding="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="usuario.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" />
+                    <Entry x:Name="txtUsuario"
+                           Grid.Column="1"
+                           Placeholder="Ingrese un usuario"
+                           TextColor="Black"
+                           PlaceholderColor="Black"
+                           Margin="10,0,0,0" />
+                </Grid>
+            </Frame>
+
+            <Button Grid.Row="1" x:Name="btnInicio" Text="Iniciar" WidthRequest="300" HeightRequest="50" BackgroundColor="DarkBlue" TextColor="White" FontSize="16"  Margin="0,10,5,20" Clicked="btnInicio_Clicked"/>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
